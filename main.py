@@ -1,9 +1,8 @@
 import streamlit as st
-import os
 import httpx
 
-# Set up environment variables
-API_KEY = os.getenv("ANTHROPIC_API_KEY")
+# Access the API key from st.secrets
+API_KEY = st.secrets["ANTHROPIC_API_KEY"]
 API_URL = "https://api.anthropic.com/v1/messages"
 ANTHROPIC_VERSION = "2023-06-01"
 
@@ -36,6 +35,8 @@ def send_message(user_prompt):
         st.error(f"HTTP error occurred: {e.response.text}")
     except Exception as e:
         st.error(f"An error occurred: {str(e)}")
+        st.write("Headers:", headers)
+        st.write("Data:", data)
     return None
 
 # Streamlit interface
